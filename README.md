@@ -4,39 +4,24 @@ A **cross-platform open-source workout application** that runs on **Android, iOS
 
 **NOTE:** The current selection of exercises is fairly limited. I **welcome contributions** of new exercises, images, and Lottie animations to help visualize the workouts better.
 
-
-
-Thought about README with image references for a couple of seconds
-Below is an example of how you might reference the screenshots in your README.md. Adjust paths and descriptions as needed for your project:
-
-markdown
-Copy code
-# Fit Main Character
-
-A **cross-platform open-source workout application** that runs on **Android, iOS, Windows, Mac, Linux, and the Web**.
-
-**NOTE:** The current selection of exercises is fairly limited. I **welcome contributions** of new exercises, images, and Lottie animations to help visualize the workouts better.
-
----
-
 ## Screenshots
 
 ### Desktop
 | Screenshot  |
 |-------------|
-| ![Desktop App](screenshots/desktop-1.png) |
+| <img src="screenshots/desktop-1.png" alt="Desktop App" style="max-height: 300px;"> |
 
 ### Web
 | Screenshot  |
 |-------------|
-| ![Web App](screenshots/web-1.png) |
+| <img src="screenshots/web-1.png" alt="Web App" style="max-height: 300px;"> |
 
 ### Mobile
 | Screenshot             |
 |------------------------|
-| ![Mobile Screenshot 1](screenshots/mobile-1.png) |
-| ![Mobile Screenshot 2](screenshots/mobile-2.png) |
-| ![Mobile Screenshot 3](screenshots/mobile-3.png) |
-| ![Mobile Screenshot 4](screenshots/mobile-4.png) |
-| ![Mobile Screenshot 5](screenshots/mobile-5.png) |
-| ![Mobile Screenshot 6](screenshots/mobile-6.png) |
+| <img src="screenshots/mobile-1.png" alt="Mobile Screenshot 1" style="max-height: 300px;"> |
+| <img src="screenshots/mobile-2.png" alt="Mobile Screenshot 2" style="max-height: 300px;"> |
+| <img src="screenshots/mobile-3.png" alt="Mobile Screenshot 3" style="max-height: 300px;"> |
+| <img src="screenshots/mobile-4.png" alt="Mobile Screenshot 4" style="max-height: 300px;"> |
+| <img src="screenshots/mobile-5.png" alt="Mobile Screenshot 5" style="max-height: 300px;"> |
+| <img src="screenshots/mobile-6.png" alt="Mobile Screenshot 6" style="max-height: 300px;"> |
