@@ -187,7 +187,7 @@ private fun RoundPreview(
                     Icon(
                         painterResource(exercise.imageRes),
                         null,
-                        Modifier.height(56.dp),
+                        Modifier.height(48.dp),
                         tint = SoftSand,
                     )
                 }

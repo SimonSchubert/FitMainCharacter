@@ -1,16 +1,19 @@
 package com.inspiredandroid.fitmaincharacter.screens.setup
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutType
 import com.inspiredandroid.fitmaincharacter.data.allDifficulties
 import com.inspiredandroid.fitmaincharacter.data.allExerciseTemplates
 import com.inspiredandroid.fitmaincharacter.data.toWorkoutExercise
 import com.inspiredandroid.fitmaincharacter.screens.setup.SetupUiState.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class SetupViewModel : ViewModel() {
@@ -89,10 +92,13 @@ class SetupViewModel : ViewModel() {
     }
 
     private fun reset() {
-        _state.update {
-            it.copy(
-                page = Page.SelectExercises,
-            )
+        viewModelScope.launch {
+            delay(300)
+            _state.update {
+                it.copy(
+                    page = Page.SelectExercises,
+                )
+            }
         }
     }
 }
