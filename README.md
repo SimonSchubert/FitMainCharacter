@@ -25,3 +25,15 @@ A **cross-platform open-source workout application** that runs on **Android, iOS
 | <img src="screenshots/mobile-4.png" alt="Mobile Screenshot 4" height="300"> |
 | <img src="screenshots/mobile-5.png" alt="Mobile Screenshot 5" height="300"> |
 | <img src="screenshots/mobile-6.png" alt="Mobile Screenshot 6" height="300"> |
+
+## Libraries
+
+### Audio
+
+https://github.com/kkostov/gadulka
+
+## Credits
+
+Audio files: https://ttsmaker.com/
+
+Icons: https://www.svgrepo.com/

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.inspiredandroid.fitmaincharacter.screens.app.App
+import eu.iamkonstantin.kotlin.gadulka.GadulkaPlayer
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +18,8 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.getInsetsController(window, window.decorView)
             .isAppearanceLightStatusBars = false
+
+        player = GadulkaPlayer(this)
 
         setContent {
             App(

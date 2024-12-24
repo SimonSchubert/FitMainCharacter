@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalLayoutApi::class)
+@file:OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
 
 package com.inspiredandroid.fitmaincharacter.screens.setup
 
@@ -50,6 +50,7 @@ import com.inspiredandroid.fitmaincharacter.components.TopBar
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutUnit
 import com.inspiredandroid.fitmaincharacter.screens.setup.SetupUiState.Page
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

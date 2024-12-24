@@ -15,7 +15,7 @@ class WorkoutViewModel(val workout: Workout) : ViewModel() {
 
     private val _state = MutableStateFlow(
         WorkoutUiState(
-            nextExercise = ::nextExercise,
+            onFinishExercise = ::nextExercise,
             onFinishRest = ::finishRest,
         ),
     )

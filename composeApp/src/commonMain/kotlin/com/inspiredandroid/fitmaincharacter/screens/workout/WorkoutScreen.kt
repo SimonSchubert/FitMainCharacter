@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package com.inspiredandroid.fitmaincharacter.screens.workout
 
 import androidx.compose.foundation.background
@@ -35,8 +37,10 @@ import com.inspiredandroid.fitmaincharacter.components.AnimatedNumber
 import com.inspiredandroid.fitmaincharacter.components.LightButton
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutUnit
+import com.inspiredandroid.fitmaincharacter.playAudio
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sport.composeapp.generated.resources.Res
@@ -65,12 +69,15 @@ fun WorkoutScreen(
                     exerciseSize = uiState.exerciseSize,
                     exerciseIndex = uiState.exerciseIndex,
                     roundProgress = uiState.roundProgress,
-                    onFinishRest = uiState.onFinishRest,
+                    onFinishRest = {
+                        playAudio("files/audio_start.mp3")
+                        uiState.onFinishRest()
+                    },
                 )
             } else {
                 ActiveWorkout(
                     exercise = currentExercise,
-                    onNextExercise = { uiState.nextExercise() },
+                    onFinishExercise = uiState.onFinishExercise,
                 )
             }
         }
@@ -161,6 +168,7 @@ private fun RestCountdown(
 
         SecondsCountdown(
             count = currentRest.seconds,
+            isExercise = false,
             nextExercise = onFinishRest,
         )
 
@@ -189,7 +197,7 @@ private fun RestCountdown(
 }
 
 @Composable
-private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onNextExercise: () -> Unit) {
+private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onFinishExercise: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -210,7 +218,10 @@ private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onNextExercise: () 
                 Spacer(Modifier.weight(1f))
 
                 LightButton(
-                    onClick = onNextExercise,
+                    onClick = {
+                        playAudio("files/audio_well_done.mp3")
+                        onFinishExercise()
+                    },
                     text = "Done",
                 )
 
@@ -220,13 +231,17 @@ private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onNextExercise: () 
             WorkoutUnit.SECOND -> {
                 SecondsCountdown(
                     count = exercise.count,
-                    nextExercise = onNextExercise,
+                    isExercise = true,
+                    nextExercise = {
+                        playAudio("files/audio_well_done.mp3")
+                        onFinishExercise()
+                    },
                 )
 
                 Spacer(Modifier.weight(1f))
 
                 LightButton(
-                    onClick = onNextExercise,
+                    onClick = onFinishExercise,
                     text = "Done",
                 )
 
@@ -285,10 +300,21 @@ private fun RepsCountdown(exercise: Workout.WorkoutExercise) {
 }
 
 @Composable
-private fun SecondsCountdown(count: Int, nextExercise: () -> Unit) {
+private fun SecondsCountdown(count: Int, isExercise: Boolean, nextExercise: () -> Unit) {
     var timeLeft by remember { mutableStateOf(count) }
     LaunchedEffect(Unit) {
         while (timeLeft > 0) {
+            if (isExercise) {
+                if (count / 2 == timeLeft) {
+                    playAudio("files/audio_half_way.mp3")
+                } else if (timeLeft == 10) {
+                    playAudio("files/audio_ten_seconds.mp3")
+                }
+            } else {
+                if (timeLeft == 10) {
+                    playAudio("files/audio_get_ready.mp3")
+                }
+            }
             delay(1000L)
             timeLeft--
         }
