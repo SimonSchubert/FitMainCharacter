@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inspiredandroid.fitmaincharacter.LargeCountdownStyle
@@ -33,8 +36,10 @@ import com.inspiredandroid.fitmaincharacter.MediumTextStyle
 import com.inspiredandroid.fitmaincharacter.SmallTextStyle
 import com.inspiredandroid.fitmaincharacter.SoftSand
 import com.inspiredandroid.fitmaincharacter.SportFontFamily
+import com.inspiredandroid.fitmaincharacter.TitleStyle
 import com.inspiredandroid.fitmaincharacter.components.AnimatedNumber
 import com.inspiredandroid.fitmaincharacter.components.LightButton
+import com.inspiredandroid.fitmaincharacter.components.TopBar
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutUnit
 import com.inspiredandroid.fitmaincharacter.playAudio
@@ -54,33 +59,45 @@ fun WorkoutScreen(
     viewModel: WorkoutViewModel = androidx.lifecycle.viewmodel.compose.viewModel(key = workout.id) { WorkoutViewModel(workout) },
 ) {
     val uiState by viewModel.state.collectAsState()
+    var showConfirmDialog by remember { mutableStateOf(false) }
+    Box {
+        if (uiState.isFinished) {
+            Finished(onFinish = onFinish)
+        } else {
+            val currentExercise = uiState.currentExercise
 
-    if (uiState.isFinished) {
-        Finished(onFinish = onFinish)
-    } else {
-        val currentExercise = uiState.currentExercise
-
-        if (currentExercise != null) {
-            val currentRest = uiState.currentRest
-            if (currentRest != null) {
-                RestCountdown(
-                    currentExercise = currentExercise,
-                    currentRest = currentRest,
-                    exerciseSize = uiState.exerciseSize,
-                    exerciseIndex = uiState.exerciseIndex,
-                    roundProgress = uiState.roundProgress,
-                    onFinishRest = {
-                        playAudio("files/audio_start.mp3")
-                        uiState.onFinishRest()
-                    },
-                )
-            } else {
-                ActiveWorkout(
-                    exercise = currentExercise,
-                    onFinishExercise = uiState.onFinishExercise,
-                )
+            if (currentExercise != null) {
+                val currentRest = uiState.currentRest
+                if (currentRest != null) {
+                    RestCountdown(
+                        currentExercise = currentExercise,
+                        currentRest = currentRest,
+                        exerciseSize = uiState.exerciseSize,
+                        exerciseIndex = uiState.exerciseIndex,
+                        roundProgress = uiState.roundProgress,
+                        onFinishRest = {
+                            playAudio("files/audio_start.mp3")
+                            uiState.onFinishRest()
+                        },
+                    )
+                } else {
+                    ActiveWorkout(
+                        exercise = currentExercise,
+                        onFinishExercise = uiState.onFinishExercise,
+                    )
+                }
             }
         }
+        TopBar(title = "", onNavigateBack = { showConfirmDialog = true })
+    }
+    if (showConfirmDialog) {
+        ConfirmStopWorkoutDialog(
+            onDismissRequest = { showConfirmDialog = false },
+            onConfirmation = {
+                showConfirmDialog = false
+                onFinish()
+            },
+        )
     }
 }
 
@@ -329,5 +346,54 @@ private fun SecondsCountdown(count: Int, isExercise: Boolean, nextExercise: () -
     Text(
         text = "seconds",
         style = MediumTextStyle(),
+    )
+}
+
+@Composable
+private fun ConfirmStopWorkoutDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = "Stop Workout",
+                style = TitleStyle(),
+            )
+        },
+        text = {
+            Text(
+                text = "Are you sure you want to stop your workout?",
+                style = SmallTextStyle(),
+            )
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmation()
+                },
+            ) {
+                Text(
+                    "Stop",
+                    style = SmallTextStyle(),
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onDismissRequest()
+                },
+            ) {
+                Text(
+                    "Cancel",
+                    style = SmallTextStyle(),
+                )
+            }
+        },
+        backgroundColor = Color(0xff202020),
     )
 }
