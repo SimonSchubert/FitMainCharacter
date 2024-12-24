@@ -58,7 +58,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation("androidx.core:core-splashscreen:1.0.1")
+            implementation(libs.androidx.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -68,6 +68,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
         }
