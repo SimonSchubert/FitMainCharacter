@@ -18,12 +18,7 @@ A **cross-platform open-source workout application** that runs on **Android, iOS
 
 ### Mobile
 
-<img src="screenshots/mobile-1.png" alt="Mobile Screenshot 1" height="300">
-<img src="screenshots/mobile-2.png" alt="Mobile Screenshot 2" height="300">
-<img src="screenshots/mobile-3.png" alt="Mobile Screenshot 3" height="300">
-<img src="screenshots/mobile-4.png" alt="Mobile Screenshot 4" height="300">
-<img src="screenshots/mobile-5.png" alt="Mobile Screenshot 5" height="300">
-<img src="screenshots/mobile-6.png" alt="Mobile Screenshot 6" height="300">
+<img src="screenshots/mobile-1.png" alt="Mobile Screenshot 1" height="300"> <img src="screenshots/mobile-2.png" alt="Mobile Screenshot 2" height="300"> <img src="screenshots/mobile-3.png" alt="Mobile Screenshot 3" height="300"> <img src="screenshots/mobile-4.png" alt="Mobile Screenshot 4" height="300"> <img src="screenshots/mobile-5.png" alt="Mobile Screenshot 5" height="300"> <img src="screenshots/mobile-6.png" alt="Mobile Screenshot 6" height="300">
 
 ## Libraries
 
