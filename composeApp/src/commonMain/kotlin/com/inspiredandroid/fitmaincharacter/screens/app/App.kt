@@ -1,10 +1,5 @@
 package com.inspiredandroid.fitmaincharacter.screens.app
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,55 +11,65 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.inspiredandroid.fitmaincharacter.ScreenBackground
-import com.inspiredandroid.fitmaincharacter.screens.app.AppUiState.Page
-import com.inspiredandroid.fitmaincharacter.screens.setup.SetupScreen
+import com.inspiredandroid.fitmaincharacter.screens.setup.DifficultyScreen
+import com.inspiredandroid.fitmaincharacter.screens.setup.ExercisesScreen
 import com.inspiredandroid.fitmaincharacter.screens.workout.WorkoutScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+enum class Screen(val route: String) {
+    Exercises("Exercises"),
+    Difficulty("Difficulty"),
+    Workout("Workout"),
+}
 
 @Composable
 @Preview
 fun App(
-    viewModel: AppViewModel = viewModel { AppViewModel() },
+    viewModel: SetupViewModel = viewModel { SetupViewModel() },
     onStartWorkout: () -> Unit = {},
     onFinishWorkout: () -> Unit = {},
 ) {
     MaterialTheme {
         val uiState by viewModel.state.collectAsState()
+        val navController = rememberNavController()
 
         Box(
             Modifier.fillMaxSize().background(ScreenBackground).statusBarsPadding()
                 .navigationBarsPadding(),
         ) {
-            AnimatedContent(
-                targetState = uiState.page,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(300)) togetherWith fadeOut(
-                        animationSpec = tween(
-                            300,
-                        ),
+            NavHost(navController, startDestination = Screen.Exercises.route) {
+                composable(Screen.Exercises.route) {
+                    ExercisesScreen(
+                        viewModel = viewModel,
+                        onNavigateToDifficulty = {
+                            navController.navigate(Screen.Difficulty.route)
+                        },
                     )
-                },
-            ) { page ->
-                when (page) {
-                    Page.Setup -> {
-                        SetupScreen(
-                            onSetupDone = { workout ->
-                                uiState.startWorkout(workout)
-                                onStartWorkout()
-                            },
-                        )
-                    }
-
-                    Page.Workout -> {
-                        WorkoutScreen(
-                            workout = uiState.workout,
-                            onFinish = {
-                                uiState.setPage(Page.Setup)
-                                onFinishWorkout()
-                            },
-                        )
-                    }
+                }
+                composable(Screen.Difficulty.route) {
+                    DifficultyScreen(
+                        viewModel = viewModel,
+                        onNavigateBack = {
+                            navController.navigateUp()
+                        },
+                        onNavigateToWorkout = {
+                            navController.navigate(Screen.Workout.route)
+                            onStartWorkout()
+                        },
+                    )
+                }
+                composable(Screen.Workout.route) {
+                    WorkoutScreen(
+                        workout = uiState.workout,
+                        onFinish = {
+                            navController.navigate(Screen.Exercises.route)
+                            onFinishWorkout()
+                        },
+                    )
                 }
             }
         }

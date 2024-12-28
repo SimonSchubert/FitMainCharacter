@@ -11,7 +11,7 @@ import sport.composeapp.generated.resources.Res
 import sport.composeapp.generated.resources.exercise_rest
 import sport.composeapp.generated.resources.exercise_stretching
 
-class WorkoutViewModel(val workout: Workout) : ViewModel() {
+class WorkoutViewModel(private val workout: Workout) : ViewModel() {
 
     private val _state = MutableStateFlow(
         WorkoutUiState(

@@ -21,9 +21,9 @@ data class ExerciseTemplate(val id: Long, val name: String, val imageRes: Drawab
 
 val allExerciseTemplates = listOf(
     ExerciseTemplate(0, "Jumping Jacks", Res.drawable.exercise_jumping_jacks, 60, WorkoutUnit.SECOND, WorkoutType.WARMUP),
-    ExerciseTemplate(1, "Pull up", Res.drawable.exercise_pullup, 2, WorkoutUnit.REPS, WorkoutType.STANDARD),
-    ExerciseTemplate(2, "Push up", Res.drawable.exercise_pushup, 5, WorkoutUnit.REPS, WorkoutType.STANDARD),
-    ExerciseTemplate(3, "Sit up", Res.drawable.exercise_situp, 5, WorkoutUnit.REPS, WorkoutType.STANDARD),
+    ExerciseTemplate(1, "Pull ups", Res.drawable.exercise_pullup, 2, WorkoutUnit.REPS, WorkoutType.STANDARD),
+    ExerciseTemplate(2, "Push ups", Res.drawable.exercise_pushup, 5, WorkoutUnit.REPS, WorkoutType.STANDARD),
+    ExerciseTemplate(3, "Sit ups", Res.drawable.exercise_situp, 5, WorkoutUnit.REPS, WorkoutType.STANDARD),
 )
 
 fun ExerciseTemplate.toWorkoutExercise(difficulty: Difficulty): Workout.WorkoutExercise {

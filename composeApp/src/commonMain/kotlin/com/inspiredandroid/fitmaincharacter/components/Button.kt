@@ -94,7 +94,7 @@ private fun FilledButton(
                 shape = RoundedCornerShape(size = 100.dp),
             )
             .clip(RoundedCornerShape(size = 100.dp))
-            .clickable { onClick() }
+            .clickable(isVisible && isEnabled) { onClick() }
             .padding(horizontal = size.horizontalSpacing, vertical = size.verticalSpacing),
         horizontalArrangement = Arrangement.spacedBy(size.imageSpacing, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

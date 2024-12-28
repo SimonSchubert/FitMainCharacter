@@ -1,28 +1,22 @@
-package com.inspiredandroid.fitmaincharacter.screens.setup
+package com.inspiredandroid.fitmaincharacter.screens.app
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutType
 import com.inspiredandroid.fitmaincharacter.data.allDifficulties
 import com.inspiredandroid.fitmaincharacter.data.allExerciseTemplates
 import com.inspiredandroid.fitmaincharacter.data.toWorkoutExercise
-import com.inspiredandroid.fitmaincharacter.screens.setup.SetupUiState.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class SetupViewModel : ViewModel() {
     private val _state = MutableStateFlow(
         SetupUiState(
-            setPage = ::setPage,
             toggleExercise = ::toggleExercise,
             toggleDifficulty = ::toggleDifficulty,
-            reset = ::reset,
         ),
     )
     val state: StateFlow<SetupUiState> = _state.asStateFlow()
@@ -39,6 +33,7 @@ class SetupViewModel : ViewModel() {
                 },
             )
         }
+        buildWorkout()
     }
 
     private fun buildWorkout() {
@@ -82,23 +77,5 @@ class SetupViewModel : ViewModel() {
             )
         }
         buildWorkout()
-    }
-
-    private fun setPage(page: Page) {
-        _state.update { it.copy(page = page) }
-        if (page == Page.SelectDifficulty) {
-            buildWorkout()
-        }
-    }
-
-    private fun reset() {
-        viewModelScope.launch {
-            delay(300)
-            _state.update {
-                it.copy(
-                    page = Page.SelectExercises,
-                )
-            }
-        }
     }
 }

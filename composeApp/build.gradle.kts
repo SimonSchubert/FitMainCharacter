@@ -67,8 +67,9 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.gadulka)
         }
@@ -97,7 +98,8 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

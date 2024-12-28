@@ -1,8 +1,5 @@
 @file:OptIn(
     ExperimentalResourceApi::class,
-    ExperimentalContracts::class,
-    ExperimentalContracts::class,
-    ExperimentalResourceApi::class,
 )
 
 package com.inspiredandroid.fitmaincharacter
@@ -11,7 +8,6 @@ import eu.iamkonstantin.kotlin.gadulka.GadulkaPlayer
 import kotlinx.browser.document
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import sport.composeapp.generated.resources.Res
-import kotlin.contracts.ExperimentalContracts
 
 actual var player: GadulkaPlayer? = null
 actual fun playAudio(resString: String) {

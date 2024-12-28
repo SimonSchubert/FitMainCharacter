@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalResourceApi::class)
-
 package com.inspiredandroid.fitmaincharacter.screens.workout
 
 import androidx.compose.foundation.background
@@ -45,7 +43,6 @@ import com.inspiredandroid.fitmaincharacter.data.WorkoutUnit
 import com.inspiredandroid.fitmaincharacter.playAudio
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import sport.composeapp.generated.resources.Res
