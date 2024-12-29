@@ -39,15 +39,11 @@ class SetupViewModel : ViewModel() {
     private fun buildWorkout() {
         val selectedDifficulty = state.value.difficulties.firstOrNull { it.isSelected }?.let { allDifficulties.firstOrNull { d -> d.id == it.id } } ?: return
         val selectedExercises = state.value.exercises.filter { it.isSelected }.mapNotNull { allExerciseTemplates.firstOrNull { e -> e.id == it.id } }
-
+        val warmups = selectedExercises.filter { it.type == WorkoutType.WARMUP }
         val rounds = buildList {
             repeat(selectedDifficulty.sets) { index ->
                 val exercises = buildList {
-                    if (index == 0) {
-                        selectedExercises.firstOrNull { it.type == WorkoutType.WARMUP }?.let { warmup ->
-                            add(warmup.toWorkoutExercise(selectedDifficulty))
-                        }
-                    }
+                    warmups.getOrNull(index)?.let { add(it.toWorkoutExercise(selectedDifficulty)) }
                     selectedExercises.filter { it.type == WorkoutType.STANDARD }.forEach { exercise ->
                         add(exercise.toWorkoutExercise(selectedDifficulty))
                     }
