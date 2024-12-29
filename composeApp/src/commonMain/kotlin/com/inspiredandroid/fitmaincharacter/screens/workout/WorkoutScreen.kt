@@ -24,9 +24,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.inspiredandroid.fitmaincharacter.LargeCountdownStyle
@@ -41,12 +44,12 @@ import com.inspiredandroid.fitmaincharacter.components.TopBar
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutUnit
 import com.inspiredandroid.fitmaincharacter.playAudio
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.finish
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.finish
 
 @Composable
 @Preview
@@ -72,6 +75,7 @@ fun WorkoutScreen(
                         exerciseSize = uiState.exerciseSize,
                         exerciseIndex = uiState.exerciseIndex,
                         roundProgress = uiState.roundProgress,
+                        isPaused = showConfirmDialog,
                         onFinishRest = {
                             playAudio("files/audio_start.mp3")
                             uiState.onFinishRest()
@@ -80,6 +84,7 @@ fun WorkoutScreen(
                 } else {
                     ActiveWorkout(
                         exercise = currentExercise,
+                        isPaused = showConfirmDialog,
                         onFinishExercise = uiState.onFinishExercise,
                     )
                 }
@@ -139,6 +144,7 @@ private fun RestCountdown(
     exerciseSize: Int,
     exerciseIndex: Int,
     roundProgress: String,
+    isPaused: Boolean,
     onFinishRest: () -> Unit,
 ) {
     Column(
@@ -183,6 +189,7 @@ private fun RestCountdown(
         SecondsCountdown(
             count = currentRest.seconds,
             isExercise = false,
+            isPaused = isPaused,
             nextExercise = onFinishRest,
         )
 
@@ -211,7 +218,11 @@ private fun RestCountdown(
 }
 
 @Composable
-private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onFinishExercise: () -> Unit) {
+private fun ActiveWorkout(
+    exercise: Workout.WorkoutExercise,
+    isPaused: Boolean,
+    onFinishExercise: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -246,6 +257,7 @@ private fun ActiveWorkout(exercise: Workout.WorkoutExercise, onFinishExercise: (
                 SecondsCountdown(
                     count = exercise.count,
                     isExercise = true,
+                    isPaused = isPaused,
                     nextExercise = {
                         playAudio("files/audio_well_done.mp3")
                         onFinishExercise()
@@ -314,25 +326,37 @@ private fun RepsCountdown(exercise: Workout.WorkoutExercise) {
 }
 
 @Composable
-private fun SecondsCountdown(count: Int, isExercise: Boolean, nextExercise: () -> Unit) {
+private fun SecondsCountdown(
+    count: Int,
+    isExercise: Boolean,
+    isPaused: Boolean,
+    nextExercise: () -> Unit,
+) {
     var timeLeft by remember { mutableStateOf(count) }
-    LaunchedEffect(Unit) {
-        while (timeLeft > 0) {
-            if (isExercise) {
-                if (count / 2 == timeLeft) {
-                    playAudio("files/audio_half_way.mp3")
-                } else if (timeLeft == 10) {
-                    playAudio("files/audio_ten_seconds.mp3")
+    LaunchedEffect(Unit, isPaused) {
+        snapshotFlow { isPaused }
+            .collect { paused ->
+                while (timeLeft > 0) {
+                    if (paused) {
+                        delay(100L)
+                        continue
+                    }
+                    if (isExercise) {
+                        if (count / 2 == timeLeft) {
+                            playAudio("files/audio_half_way.mp3")
+                        } else if (timeLeft == 10) {
+                            playAudio("files/audio_ten_seconds.mp3")
+                        }
+                    } else {
+                        if (timeLeft == 10) {
+                            playAudio("files/audio_get_ready.mp3")
+                        }
+                    }
+                    delay(1000L)
+                    timeLeft--
                 }
-            } else {
-                if (timeLeft == 10) {
-                    playAudio("files/audio_get_ready.mp3")
-                }
+                nextExercise()
             }
-            delay(1000L)
-            timeLeft--
-        }
-        nextExercise()
     }
     Row {
         AnimatedNumber(
@@ -369,6 +393,8 @@ private fun ConfirmStopWorkoutDialog(
         },
         confirmButton = {
             TextButton(
+                modifier = Modifier
+                    .pointerHoverIcon(PointerIcon.Hand),
                 onClick = {
                     onConfirmation()
                 },
@@ -381,6 +407,8 @@ private fun ConfirmStopWorkoutDialog(
         },
         dismissButton = {
             TextButton(
+                modifier = Modifier
+                    .pointerHoverIcon(PointerIcon.Hand),
                 onClick = {
                     onDismissRequest()
                 },

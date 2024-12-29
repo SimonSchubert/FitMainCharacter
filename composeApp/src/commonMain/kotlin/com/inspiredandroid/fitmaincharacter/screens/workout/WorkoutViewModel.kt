@@ -3,13 +3,13 @@ package com.inspiredandroid.fitmaincharacter.screens.workout
 import androidx.lifecycle.ViewModel
 import com.inspiredandroid.fitmaincharacter.data.Workout
 import com.inspiredandroid.fitmaincharacter.data.WorkoutType
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.exercise_rest
+import fitmaincharacter.composeapp.generated.resources.exercise_stretching
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.exercise_rest
-import sport.composeapp.generated.resources.exercise_stretching
 
 class WorkoutViewModel(private val workout: Workout) : ViewModel() {
 

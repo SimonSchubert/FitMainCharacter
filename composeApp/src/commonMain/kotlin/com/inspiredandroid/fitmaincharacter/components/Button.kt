@@ -17,6 +17,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -94,6 +96,7 @@ private fun FilledButton(
                 shape = RoundedCornerShape(size = 100.dp),
             )
             .clip(RoundedCornerShape(size = 100.dp))
+            .pointerHoverIcon(PointerIcon.Hand)
             .clickable(isVisible && isEnabled) { onClick() }
             .padding(horizontal = size.horizontalSpacing, vertical = size.verticalSpacing),
         horizontalArrangement = Arrangement.spacedBy(size.imageSpacing, Alignment.CenterHorizontally),

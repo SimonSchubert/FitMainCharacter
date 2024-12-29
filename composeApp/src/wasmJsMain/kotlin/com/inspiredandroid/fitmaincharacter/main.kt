@@ -20,11 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
 import com.inspiredandroid.fitmaincharacter.screens.app.App
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.exercise_stretching
 import kotlinx.browser.document
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.exercise_stretching
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {

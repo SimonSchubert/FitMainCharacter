@@ -25,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import com.inspiredandroid.fitmaincharacter.CardBackground
 import com.inspiredandroid.fitmaincharacter.MediumTextStyle
@@ -102,6 +104,7 @@ private fun DifficultyButton(difficulty: Selectable, toggleDifficulty: (Long) ->
                 if (difficulty.isSelected) SoftSand else Color.Transparent,
                 shape = RoundedCornerShape(8.dp),
             )
+            .pointerHoverIcon(PointerIcon.Hand)
             .clickable { toggleDifficulty(difficulty.id) }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -130,7 +133,6 @@ private fun RoundPreview(
 
         FlowRow(Modifier.clip(RoundedCornerShape(4.dp)).background(TileBackground)) {
             round.exercises.forEach { exercise ->
-
                 Row(
                     modifier = Modifier.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,

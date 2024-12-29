@@ -1,4 +1,4 @@
-rootProject.name = "Sport"
+rootProject.name = "FitMainCharacter"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

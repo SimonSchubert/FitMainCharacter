@@ -8,9 +8,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.RussoOne_Regular
 import org.jetbrains.compose.resources.Font
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.RussoOne_Regular
 
 val ScreenBackground = Color(0xff121212)
 val CardBackground = Color.White.copy(alpha = 0.06f)

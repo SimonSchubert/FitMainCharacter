@@ -1,11 +1,11 @@
 package com.inspiredandroid.fitmaincharacter.data
 
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.exercise_jumping_jacks
+import fitmaincharacter.composeapp.generated.resources.exercise_pullup
+import fitmaincharacter.composeapp.generated.resources.exercise_pushup
+import fitmaincharacter.composeapp.generated.resources.exercise_situp
 import org.jetbrains.compose.resources.DrawableResource
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.exercise_jumping_jacks
-import sport.composeapp.generated.resources.exercise_pullup
-import sport.composeapp.generated.resources.exercise_pushup
-import sport.composeapp.generated.resources.exercise_situp
 
 enum class WorkoutUnit {
     SECOND,

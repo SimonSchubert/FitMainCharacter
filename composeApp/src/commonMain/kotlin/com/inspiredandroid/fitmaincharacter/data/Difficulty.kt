@@ -1,12 +1,12 @@
 package com.inspiredandroid.fitmaincharacter.data
 
+import fitmaincharacter.composeapp.generated.resources.Res
+import fitmaincharacter.composeapp.generated.resources.difficulty_burger
+import fitmaincharacter.composeapp.generated.resources.difficulty_carrot
+import fitmaincharacter.composeapp.generated.resources.difficulty_chicken
+import fitmaincharacter.composeapp.generated.resources.difficulty_egg
+import fitmaincharacter.composeapp.generated.resources.difficulty_pizza
 import org.jetbrains.compose.resources.DrawableResource
-import sport.composeapp.generated.resources.Res
-import sport.composeapp.generated.resources.difficulty_burger
-import sport.composeapp.generated.resources.difficulty_carrot
-import sport.composeapp.generated.resources.difficulty_chicken
-import sport.composeapp.generated.resources.difficulty_egg
-import sport.composeapp.generated.resources.difficulty_pizza
 
 data class Difficulty(val id: Long, val name: String, val imageRes: DrawableResource, val sets: Int, val multiplier: Float)
 
