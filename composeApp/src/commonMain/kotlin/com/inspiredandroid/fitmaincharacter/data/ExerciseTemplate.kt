@@ -33,12 +33,10 @@ val allExerciseTemplates = listOf(
 
 )
 
-fun ExerciseTemplate.toWorkoutExercise(difficulty: Difficulty): Workout.WorkoutExercise {
-    return Workout.WorkoutExercise(
-        name = this.name,
-        imageRes = this.imageRes,
-        count = if (type == WorkoutType.WARMUP) baseCount else (baseCount * difficulty.multiplier).toInt(),
-        unit = this.unit,
-        type = this.type,
-    )
-}
+fun ExerciseTemplate.toWorkoutExercise(difficulty: Difficulty): Workout.WorkoutExercise = Workout.WorkoutExercise(
+    name = this.name,
+    imageRes = this.imageRes,
+    count = if (type == WorkoutType.WARMUP) baseCount else (baseCount * difficulty.multiplier).toInt(),
+    unit = this.unit,
+    type = this.type,
+)

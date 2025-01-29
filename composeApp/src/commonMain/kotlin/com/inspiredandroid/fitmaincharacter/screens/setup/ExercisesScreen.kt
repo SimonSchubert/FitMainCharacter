@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -64,30 +66,36 @@ private fun ExercisesContent(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TopBar(title = "Exercises")
 
-        LazyVerticalGrid(
-            modifier = Modifier.weight(1f),
-            columns = GridCells.Adaptive(128.dp),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            items(exercises, key = { it.id }) { exercise ->
-                ExerciseButton(
-                    exercise = exercise,
-                    onClick = {
-                        toggleExercise(exercise.id)
-                    },
-                )
+        Box {
+            LazyVerticalGrid(
+                modifier = Modifier.fillMaxSize(),
+                columns = GridCells.Adaptive(128.dp),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    bottom = 72.dp,
+                    start = 16.dp,
+                    end = 16.dp,
+                ),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                items(exercises, key = { it.id }) { exercise ->
+                    ExerciseButton(
+                        exercise = exercise,
+                        onClick = {
+                            toggleExercise(exercise.id)
+                        },
+                    )
+                }
             }
+
+            LightButton(
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                onClick = onContinueClick,
+                text = "Continue",
+                isVisible = exercises.any { it.isSelected },
+            )
         }
-
-        LightButton(
-            onClick = onContinueClick,
-            text = "Continue",
-            isVisible = exercises.any { it.isSelected },
-        )
-
-        Spacer(Modifier.height(16.dp))
     }
 }
 

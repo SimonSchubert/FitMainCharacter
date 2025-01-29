@@ -5,6 +5,7 @@ package com.inspiredandroid.fitmaincharacter.screens.setup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -68,28 +69,30 @@ private fun SelectDifficultyContent(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TopBar(title = "Intensity", onNavigateBack = onNavigateBack)
 
-        Spacer(Modifier.height(16.dp))
+        Box {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(Modifier.height(16.dp))
 
-        FlowRow {
-            difficulties.forEach { difficulty ->
-                DifficultyButton(difficulty = difficulty, toggleDifficulty = toggleDifficulty)
+                FlowRow {
+                    difficulties.forEach { difficulty ->
+                        DifficultyButton(difficulty = difficulty, toggleDifficulty = toggleDifficulty)
+                    }
+                }
+
+                Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                    workout.rounds.forEachIndexed { index, round ->
+                        RoundPreview(index, round)
+                    }
+                    Spacer(Modifier.height(72.dp))
+                }
             }
+
+            LightButton(
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                onClick = onContinueClick,
+                text = "Start",
+            )
         }
-
-        Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-            workout.rounds.forEachIndexed { index, round ->
-                RoundPreview(index, round)
-            }
-        }
-
-        Spacer(Modifier.height(16.dp))
-
-        LightButton(
-            onClick = onContinueClick,
-            text = "Start",
-        )
-
-        Spacer(Modifier.height(16.dp))
     }
 }
 

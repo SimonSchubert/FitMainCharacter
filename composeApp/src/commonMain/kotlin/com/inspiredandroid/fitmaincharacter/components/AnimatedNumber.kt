@@ -43,14 +43,10 @@ fun AnimatedNumber(
 }
 
 private data class Digit(val digitChar: Char, val fullNumber: Int) {
-    override fun equals(other: Any?): Boolean {
-        return when (other) {
-            is Digit -> digitChar == other.digitChar
-            else -> false
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is Digit -> digitChar == other.digitChar
+        else -> false
     }
 }
 
-private operator fun Digit.compareTo(other: Digit): Int {
-    return fullNumber.compareTo(other.fullNumber)
-}
+private operator fun Digit.compareTo(other: Digit): Int = fullNumber.compareTo(other.fullNumber)
